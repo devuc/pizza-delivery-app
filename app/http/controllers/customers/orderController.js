@@ -41,8 +41,8 @@ function orderController() {
 
             mode: 'payment',
 
-            success_url: `http://localhost:9000/order-confirmation`,
-            cancel_url: `http://localhost:9000/payment-cancellation`,
+            success_url: `https://pizzetti.onrender.com/order-confirmation`,
+            cancel_url: `https://pizzetti.onrender.com/payment-cancellation`,
           });
           return res.redirect(303, session.url);
         } else {

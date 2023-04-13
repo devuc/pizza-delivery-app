@@ -10,7 +10,7 @@ function authController() {
   return {
     //Naming convention for read
     login(req, res) {
-      res.render('auth/login');
+      res.render('auth/Login');
     },
     postLogin(req, res, next) {
       const { email, password } = req.body;
@@ -42,7 +42,7 @@ function authController() {
     },
 
     register(req, res) {
-      res.render('auth/register');
+      res.render('auth/Register');
     },
     async postRegister(req, res) {
       const { name, email, password } = req.body;
