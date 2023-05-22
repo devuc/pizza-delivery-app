@@ -82,7 +82,7 @@ function authController() {
           return res.redirect('/');
         })
         .catch(err => {
-          req.flash('error', 'Kuch toh gaad baad hai Daya!');
+          req.flash('error', 'Something went wrong...');
           return res.redirect('/register');
         });
     },

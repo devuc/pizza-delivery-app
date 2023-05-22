@@ -5,6 +5,7 @@ import { initAdmin } from './admin';
 
 let addToCart = document.querySelectorAll('.add-to-cart');
 let cartCounter = document.querySelector('#cartCounter');
+// const io = require('socket.io');
 
 function updateCart(pizza) {
   axios
@@ -74,6 +75,9 @@ function updateStatus(order) {
 updateStatus(order);
 
 let socket = io();
+socket.on('connection', socket => {
+  console.log('areeee');
+});
 
 if (order) {
   socket.emit('join', `order_${JSON.stringify(order._id)}`);
@@ -97,14 +101,21 @@ socket.on('orderUpdated', data => {
   }).show();
   updateStatus(updatedOrder);
 });
-
-socket.once('paymentCancelled', () => {
-  if (window.location.pathname === '/cart') {
-    new Noty({
-      type: 'error',
-      timeout: 1000,
-      text: 'Payment Failed.',
-      progressBar: false,
-    }).show();
-  }
+socket.on('orderPlaced', order => {
+  console.log(order);
+  new Noty({
+    type: 'success',
+    timeout: 1000,
+    text: 'New order!',
+    progressBar: false,
+  }).show();
+});
+socket.on('paymentCancelled', () => {
+  console.log('huhu');
+  new Noty({
+    type: 'success',
+    timeout: 1000,
+    text: 'New order!',
+    progressBar: false,
+  }).show();
 });

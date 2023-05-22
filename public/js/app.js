@@ -85,6 +85,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 var addToCart = document.querySelectorAll('.add-to-cart');
 var cartCounter = document.querySelector('#cartCounter');
+// const io = require('socket.io');
+
 function updateCart(pizza) {
   axios__WEBPACK_IMPORTED_MODULE_3__["default"].post('/update-cart', pizza).then(function (res) {
     cartCounter.innerText = res.data.totalQty;
@@ -145,6 +147,9 @@ function updateStatus(order) {
 }
 updateStatus(order);
 var socket = io();
+socket.on('connection', function (socket) {
+  console.log('areeee');
+});
 if (order) {
   socket.emit('join', "order_".concat(JSON.stringify(order._id)));
 }
@@ -165,15 +170,23 @@ socket.on('orderUpdated', function (data) {
   }).show();
   updateStatus(updatedOrder);
 });
-socket.once('paymentCancelled', function () {
-  if (window.location.pathname === '/cart') {
-    new (noty__WEBPACK_IMPORTED_MODULE_1___default())({
-      type: 'error',
-      timeout: 1000,
-      text: 'Payment Failed.',
-      progressBar: false
-    }).show();
-  }
+socket.on('orderPlaced', function (order) {
+  console.log(order);
+  new (noty__WEBPACK_IMPORTED_MODULE_1___default())({
+    type: 'success',
+    timeout: 1000,
+    text: 'New order!',
+    progressBar: false
+  }).show();
+});
+socket.on('paymentCancelled', function () {
+  console.log('huhu');
+  new (noty__WEBPACK_IMPORTED_MODULE_1___default())({
+    type: 'success',
+    timeout: 1000,
+    text: 'New order!',
+    progressBar: false
+  }).show();
 });
 
 /***/ }),
